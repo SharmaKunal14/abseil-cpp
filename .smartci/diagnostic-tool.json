@@ -1,5 +1,5 @@
 {
   "repository": "SharmaKunal14/smart-ci",
-  "revision": "8c831420d65c9ebf1dd7ab68348aeb5720b9b0aa",
-  "scope": "native failure diagnostic, not TIA"
+  "revision": "ad9917f2de3e6bf2c75deb1eb8ee4509b3fbeaef",
+  "scope": "full native baseline with explicit bounded system crash reports; not TIA"
 }

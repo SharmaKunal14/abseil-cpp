@@ -17,7 +17,7 @@ def summarize_events(path: Path) -> dict[str, object]:
     last_message = False
     total = 0
     with path.open("rb") as stream:
-        for line in stream:
+        while line := stream.readline(8 * 1024 * 1024 + 1):
             total += len(line)
             if total > 64 * 1024 * 1024 or len(line) > 8 * 1024 * 1024:
                 raise ValueError("build events exceed limit")
@@ -48,7 +48,10 @@ def summarize_events(path: Path) -> dict[str, object]:
             if "finished" in event:
                 if finished is not None:
                     raise ValueError("duplicate build completion")
-                finished = event["finished"]["exitCode"]["code"]
+                exit_code = event["finished"]["exitCode"]
+                finished = exit_code.get("code")
+                if finished is None and exit_code.get("name") == "SUCCESS":
+                    finished = 0
                 if type(finished) is not int:
                     raise ValueError("invalid build exit code")
             last_message = last_message or event.get("lastMessage") is True

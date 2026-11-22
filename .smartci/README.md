@@ -16,3 +16,5 @@ One GitHub-hosted Ubuntu job, maximum 25 minutes, 20-minute native-process limit
 seven-day artifacts, read-only repository permissions and no deployment workflow.
 Initial baseline only: no Smart CI selection or performance benefit is claimed.
 Upstream master remains unchanged. Do not merge experiment branches.
+
+This PR establishes the unchanged native GitHub baseline before selection.

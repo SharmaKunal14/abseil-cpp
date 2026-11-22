@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           repository: SharmaKunal14/smart-ci
-          ref: 546959b70596a99c4730e5127156959840fd4bbc
+          ref: 7713624d6da2b3cde2c2563b071b2d068f064954
           path: tool
           persist-credentials: false
       - name: Verify the independent native reference provenance

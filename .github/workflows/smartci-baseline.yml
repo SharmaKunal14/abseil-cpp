@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   native:
+    if: github.head_ref == 'codex/smartci-native-baseline'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:

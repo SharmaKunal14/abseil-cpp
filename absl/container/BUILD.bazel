@@ -1375,7 +1375,7 @@ cc_library(
 
 cc_library(
     name = "raw_linked_hash_set",
-    hdrs = ["internal/raw_linked_hash_set.h"],
+    hdrs = ["internal/linked_hash_table.h"],
     copts = ABSL_DEFAULT_COPTS,
     linkopts = ABSL_DEFAULT_LINKOPTS,
     deps = [

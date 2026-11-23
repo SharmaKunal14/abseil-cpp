@@ -1,24 +1,24 @@
-name: Paired native and Smart CI evaluation
+name: Smart CI selective native tests
 on:
   pull_request:
-    branches: [codex/native-evaluation-base, codex/native-evaluation-fixed-base]
+    branches: [codex/native-selective-base, codex/native-selective-fixed-base]
     types: [opened, synchronize, reopened]
 permissions:
   contents: read
   actions: read
 concurrency:
-  group: abseil-paired-${{ github.event.pull_request.number }}
+  group: abseil-selective-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 jobs:
-  compare:
-    if: contains(fromJSON('["codex/linked-hash-fix-evaluation", "codex/linked-hash-regression-evaluation", "codex/native-fallback-evaluation"]'), github.head_ref)
+  test:
+    if: contains(fromJSON('["codex/native-selective-fix", "codex/native-selective-fallback"]'), github.head_ref)
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
-        arm: [native, candidate]
+        arm: [candidate]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           repository: SharmaKunal14/smart-ci
-          ref: 6c858539f3fa574f7429ffef821105c446a71c68
+          ref: 1e86b397f86a08547909b3a67f1bd4b64278ed19
           path: tool
           persist-credentials: false
       - name: Authenticate precomputed evidence provenance
@@ -144,7 +144,7 @@ jobs:
           echo 'created=true' >> "$GITHUB_OUTPUT"
           systemctl show apport-coredump-hook@smartci-probe.service --property=LoadState --value > "$RUNNER_TEMP/runner-policy/apport-effective.txt"
           test "$(cat "$RUNNER_TEMP/runner-policy/apport-effective.txt")" = masked
-      - name: Execute independent native or candidate arm
+      - name: Execute selected or full-fallback tests
         working-directory: source
         env:
           ARM: ${{ matrix.arm }}
@@ -154,11 +154,11 @@ jobs:
         run: |
           if [ "$ARM" = candidate ] && [ "$PLANNER_INSTALLED" = success ]; then
             "$GITHUB_WORKSPACE/tool/.venv/bin/python" "$GITHUB_WORKSPACE/tool/examples/abseil/evaluate.py" \
-              --mode candidate --base "$BASE" --head "$HEAD" \
+              --mode candidate --execution-mode selective --base "$BASE" --head "$HEAD" \
               --evidence "$RUNNER_TEMP/map/native-query" --output "$RUNNER_TEMP/evaluation"
           else
             python3 "$GITHUB_WORKSPACE/tool/examples/abseil/evaluate.py" \
-              --mode "$ARM" --base "$BASE" --head "$HEAD" --output "$RUNNER_TEMP/evaluation"
+              --mode "$ARM" --execution-mode selective --base "$BASE" --head "$HEAD" --output "$RUNNER_TEMP/evaluation"
           fi
       - name: Restore the Apport hook on the disposable runner
         if: always() && steps.apport.outputs.created == 'true'
@@ -181,7 +181,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: paired-${{ matrix.arm }}-${{ github.run_attempt }}
+          name: native-selective-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/evaluation
             ${{ runner.temp }}/runner-policy

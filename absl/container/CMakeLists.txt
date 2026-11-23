@@ -1161,7 +1161,7 @@ absl_cc_library(
   NAME
     raw_linked_hash_set
   HDRS
-    "internal/raw_linked_hash_set.h"
+    "internal/linked_hash_table.h"
   COPTS
     ${ABSL_DEFAULT_COPTS}
   LINKOPTS

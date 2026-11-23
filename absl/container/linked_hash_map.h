@@ -41,7 +41,7 @@
 #include "absl/base/optimization.h"
 #include "absl/base/throw_delegate.h"
 #include "absl/container/hash_container_defaults.h"
-#include "absl/container/internal/raw_linked_hash_set.h"
+#include "absl/container/internal/linked_hash_table.h"
 
 namespace absl {
 ABSL_NAMESPACE_BEGIN

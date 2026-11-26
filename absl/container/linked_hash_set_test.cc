@@ -838,6 +838,15 @@ TEST(LinkedHashSet, ExtractInsert) {
   EXPECT_THAT(s, ElementsAre(7, 2, 17, 19));
 }
 
+TEST(LinkedHashSet, HintedInsertEmptyNodePreservesContents) {
+  linked_hash_set<int> s = {1, 7, 2};
+  linked_hash_set<int>::node_type node;
+  auto it = s.insert(s.begin(), std::move(node));
+  EXPECT_EQ(it, s.end());
+  EXPECT_TRUE(node.empty());
+  EXPECT_THAT(s, ElementsAre(1, 7, 2));
+}
+
 TEST(LinkedHashSet, NonTransparentRangeConstructorConvertsElementsOnce) {
   struct PolyHash {
     size_t operator()(int x) const { return static_cast<size_t>(x) ^ 0x1234; }

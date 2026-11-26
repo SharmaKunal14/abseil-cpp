@@ -1,0 +1,4 @@
+Collect a fresh dependency map from the reviewed full native profile.
+Application, tests and build inputs match the previously passing native baseline.
+This enrollment restores upstream .position from the intentional regression fixture;
+it does not change tests or native test options.

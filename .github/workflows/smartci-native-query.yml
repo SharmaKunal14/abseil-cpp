@@ -1,3 +1,4 @@
+# Bounded enrollment only; no selected-test execution in this workflow.
 name: Smart CI native map enrollment
 on:
   pull_request:

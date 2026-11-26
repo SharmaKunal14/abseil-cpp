@@ -1541,3 +1541,16 @@ cc_binary(
         "@google_benchmark//:benchmark_main",
     ],
 )
+
+cc_test(
+    name = "linked_hash_node_insertion_test",
+    srcs = ["linked_hash_node_insertion_test.cc"],
+    copts = ABSL_TEST_COPTS,
+    linkopts = ABSL_DEFAULT_LINKOPTS,
+    deps = [
+        ":linked_hash_map",
+        ":linked_hash_set",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)

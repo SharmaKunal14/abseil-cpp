@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           repository: SharmaKunal14/smart-ci
-          ref: cbc9544312f59bfd98882e60d64adea30f5cd943
+          ref: 4acbf07ba36e558539b42d87fd5ddaf05daeb0d3
           path: tool
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97

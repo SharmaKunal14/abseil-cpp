@@ -1,0 +1,2 @@
+Collect a fresh dependency map from the reviewed full native profile.
+No application source or tests are changed by this enrollment PR.

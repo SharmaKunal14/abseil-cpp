@@ -1,7 +1,7 @@
-name: "Action delivery: independent native control"
+name: "Action automatic enrollment: independent native control"
 on:
   pull_request:
-    branches: [codex/action-delivery-base]
+    branches: [codex/action-auto-base]
     types: [opened, synchronize, reopened]
 permissions:
   contents: read
@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   test:
-    if: github.head_ref == 'codex/action-delivery-control' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.head_ref == 'codex/action-auto-control' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           repository: SharmaKunal14/smart-ci
-          ref: b2160a7e5c3571dc9bcc1ec7fdd34ad886a2e542
+          ref: e780aeb00eb5b81c35b062c65734067c03279754
           path: tool
           persist-credentials: false
       - name: Bound unused system crash processing on this disposable runner

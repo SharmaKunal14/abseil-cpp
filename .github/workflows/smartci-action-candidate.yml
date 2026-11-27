@@ -1,23 +1,25 @@
-name: "Action delivery: Smart CI subset"
+name: "Action automatic enrollment and PR selection"
 on:
+  push:
+    branches: [codex/action-auto-base]
   pull_request:
-    branches: [codex/action-delivery-base]
+    branches: [codex/action-auto-base]
     types: [opened, synchronize, reopened]
 permissions:
   contents: read
   actions: read
 concurrency:
-  group: action-candidate-${{ github.event.pull_request.number }}
+  group: action-auto-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   test:
-    if: github.head_ref == 'codex/action-delivery-candidate' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'push' || (github.head_ref == 'codex/action-auto-candidate' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           path: source
           fetch-depth: 0
           persist-credentials: false
@@ -75,7 +77,7 @@ jobs:
           systemctl show apport-coredump-hook@smartci-probe.service --property=LoadState --value > "$RUNNER_TEMP/runner-policy/apport-effective.txt"
           test "$(cat "$RUNNER_TEMP/runner-policy/apport-effective.txt")" = masked
       - name: Plan and execute through the released Smart CI Action
-        uses: SharmaKunal14/smart-ci@b2160a7e5c3571dc9bcc1ec7fdd34ad886a2e542
+        uses: SharmaKunal14/smart-ci@e780aeb00eb5b81c35b062c65734067c03279754
         with:
           path: source
       - name: Restore the Apport hook on the disposable runner

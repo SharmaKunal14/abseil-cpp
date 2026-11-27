@@ -1,7 +1,7 @@
 name: "Action delivery: Smart CI subset"
 on:
   pull_request:
-    branches: [codex/action-delivery-base]
+    branches: [codex/action-regression-base]
     types: [opened, synchronize, reopened]
 permissions:
   contents: read
@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   test:
-    if: github.head_ref == 'codex/action-delivery-candidate' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.head_ref == 'codex/action-regression-candidate' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     steps:

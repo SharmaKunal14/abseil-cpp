@@ -1,7 +1,7 @@
 name: "Action delivery: independent native control"
 on:
   pull_request:
-    branches: [codex/action-delivery-base]
+    branches: [codex/action-regression-base]
     types: [opened, synchronize, reopened]
 permissions:
   contents: read
@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   test:
-    if: github.head_ref == 'codex/action-delivery-control' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.head_ref == 'codex/action-regression-control' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:

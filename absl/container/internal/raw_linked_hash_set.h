@@ -454,7 +454,8 @@ class raw_linked_hash_set {
   }
 
   iterator insert(const_iterator, node_type&& node) {
-    return insert(std::move(node)).position;
+    const auto result = insert(std::move(node));
+    return result.position;
   }
 
   template <typename... Args>

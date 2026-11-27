@@ -101,7 +101,7 @@
     "timeout_seconds": 1380
   },
   "maps": {
-    "branch": "codex/action-warm-base",
-    "workflow": ".github/workflows/action-warm.yml"
+    "branch": "codex/action-matched-base",
+    "workflow": ".github/workflows/action-matched-enroll.yml"
   }
 }

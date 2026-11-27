@@ -1,4 +1,4 @@
-name: Action delivery: Smart CI subset
+name: "Action delivery: Smart CI subset"
 on:
   pull_request:
     branches: [codex/action-delivery-base]

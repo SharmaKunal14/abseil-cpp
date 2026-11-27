@@ -1,4 +1,4 @@
-name: Action delivery: independent native control
+name: "Action delivery: independent native control"
 on:
   pull_request:
     branches: [codex/action-delivery-base]
